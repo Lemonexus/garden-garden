@@ -3,13 +3,23 @@ namespace SpriteKind {
     export const Sprout = SpriteKind.create()
 }
 
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Sprout, function(enemy: Sprite, theSprout: Sprite) {
-    info.player2.changeScoreBy(1)
+function turnToVeggie(theSprout: Sprite, whoToFollow: Sprite){
     let veggieIndex = randint(0, veggies.length - 1)
     theSprout.setImage(veggies[veggieIndex])
     theSprout.say("")
     theSprout.setKind(SpriteKind.Veggie)
-    theSprout.follow(enemy)
+    theSprout.follow(whoToFollow)
+}
+
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Sprout, function(enemy: Sprite, theSprout: Sprite) {
+    info.player2.changeScoreBy(1)
+    turnToVeggie(theSprout, enemy)
+    rabbitGoToSprout()
+})
+
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Sprout, function(player: Sprite, theSprout: Sprite) {
+    info.player1.changeScoreBy(1)
+    turnToVeggie(theSprout, player)
 })
 
 function rabbitGoToSprout(){
@@ -190,6 +200,7 @@ let player = sprites.create(img`
     . . f . f . . . f . f . . . . . 
     . . f . f . . . f . f . . . . . 
     `, SpriteKind.Player)
+player.z = 10
 let rabbit = sprites.create(img`
     . . . . . . 1 . . 1 1 . . . . . 
     . . . . . 1 1 . . 1 . . . . . . 
