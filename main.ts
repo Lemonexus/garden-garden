@@ -2,6 +2,27 @@ namespace SpriteKind {
     export const Veggie = SpriteKind.create()
     export const Sprout = SpriteKind.create()
 }
+
+function rabbitGoToSprout(){
+    let sprouts = sprites.allOfKind(SpriteKind.Sprout)
+    if(sprouts.length > 0.00){
+        let sproutIndex = randint(0, sprouts.length - 1)
+        let sprout = sprouts[sproutIndex]
+    }
+}
+
+function createSprouts () {
+    if(avaliableTiles.length > 0){
+        sprout = sprites.create(sproutImg, SpriteKind.Sprout)
+        tileIndex = randint(0, avaliableTiles.length - 1)
+        tiles.placeOnTile(sprout, avaliableTiles[tileIndex])
+        avaliableTiles.removeAt(tileIndex)
+    }
+}
+let tileIndex = 0
+let sprout: Sprite = null
+let avaliableTiles: tiles.Location[] = []
+let sproutImg: Image = null
 let veggies = [
 img`
     . . . . . . . . . . . . . . . . 
@@ -130,7 +151,7 @@ img`
     . . . . . . . . . . . . . . . . 
     `
 ]
-let sproutImg = img`
+sproutImg = img`
     . . . . 
     . 7 . 7 
     7 7 7 7 
@@ -172,5 +193,13 @@ let rabbit = sprites.create(img`
     . . . . . . 1 . 1 . . . . . . . 
     . . . . . . 1 . 1 . . . . . . . 
     `, SpriteKind.Enemy)
-scene.setBackgroundColor(13)
 tiles.setTilemap(tilemap`level`)
+avaliableTiles = tiles.getTilesByType(myTiles.tile1)
+scene.cameraFollowSprite(player)
+controller.moveSprite(player)
+info.player1.setScore(0)
+info.player2.setScore(0)
+scene.setBackgroundColor(13)
+game.onUpdateInterval(100, function () {
+    createSprouts()
+})
