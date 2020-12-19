@@ -13,12 +13,18 @@ function turnToVeggie(theSprout: Sprite, whoToFollow: Sprite){
 
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Sprout, function(enemy: Sprite, theSprout: Sprite) {
     info.player2.changeScoreBy(1)
+    if (info.player2.score() == 10) {
+        game.over(false)
+    }
     turnToVeggie(theSprout, enemy)
     rabbitGoToSprout()
 })
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Sprout, function(player: Sprite, theSprout: Sprite) {
     info.player1.changeScoreBy(1)
+    if (info.player1.score() == 10) {
+        game.over(true)
+    }
     turnToVeggie(theSprout, player)
 })
 
