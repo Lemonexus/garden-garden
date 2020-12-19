@@ -14,6 +14,7 @@ function turnToVeggie(theSprout: Sprite, whoToFollow: Sprite){
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Sprout, function(enemy: Sprite, theSprout: Sprite) {
     info.player2.changeScoreBy(1)
     if (info.player2.score() == 10) {
+        game.showLongText(losemessage, DialogLayout.Top)
         game.over(false)
     }
     turnToVeggie(theSprout, enemy)
@@ -23,6 +24,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Sprout, function(enemy: Sprite, t
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Sprout, function(player: Sprite, theSprout: Sprite) {
     info.player1.changeScoreBy(1)
     if (info.player1.score() == 10) {
+        game.showLongText(winmessage, DialogLayout.Top)
         game.over(true)
     }
     turnToVeggie(theSprout, player)
@@ -237,3 +239,17 @@ game.onUpdateInterval(100, function () {
     createSprouts()
     rabbitGoToSprout()
 })
+
+let message = `
+steal the vegetables from the bunny because you are poor and want food.
+the bunny has vegetables and you want them for no reason. ok also
+the vegetables names are ashley. also i hope you dont win cause
+stealing good so yes. enjoy the game of amazingingsish
+`
+
+let losemessage = `
+ya suck`
+
+let winmessage = `
+why you steal food smh`
+game.showLongText(message, DialogLayout.Full)
